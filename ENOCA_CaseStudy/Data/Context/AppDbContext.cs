@@ -4,14 +4,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ENOCA_CaseStudy.Data.Context
 {
-    public class AppDbContext:IdentityDbContext<User>
+    public class AppDbContext : IdentityDbContext<User>
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options): base(options)
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
 
         }
-        public DbSet<Faculty> Faculties { get; set; }
-        public DbSet<Section> Sections { get; set; }
-        public DbSet<Student> Students { get; set; }
+        public DbSet<Movie> Movies { get; set; }
+        public DbSet<Saloon> Saloons { get; set; }
+        public DbSet<MovieSaloon> MovieSaloon { get; set; }
     }
 }

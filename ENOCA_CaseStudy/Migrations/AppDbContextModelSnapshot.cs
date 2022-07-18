@@ -22,73 +22,67 @@ namespace ENOCA_CaseStudy.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("ENOCA_CaseStudy.Data.Entites.Faculty", b =>
+            modelBuilder.Entity("ENOCA_CaseStudy.Data.Entites.Movie", b =>
                 {
-                    b.Property<int>("FacultyID")
+                    b.Property<int>("MovieID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FacultyID"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MovieID"), 1L, 1);
 
-                    b.Property<string>("FacultyName")
+                    b.Property<string>("MovieName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("FacultyID");
+                    b.Property<int>("ProductionYear")
+                        .HasColumnType("int");
 
-                    b.ToTable("Faculties");
+                    b.HasKey("MovieID");
+
+                    b.ToTable("Movies");
                 });
 
-            modelBuilder.Entity("ENOCA_CaseStudy.Data.Entites.Section", b =>
+            modelBuilder.Entity("ENOCA_CaseStudy.Data.Entites.MovieSaloon", b =>
                 {
-                    b.Property<int>("SectionID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SectionID"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("FacultyID")
+                    b.Property<int>("MovieId")
                         .HasColumnType("int");
 
-                    b.Property<string>("SectionName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ReleaseYear")
+                        .HasColumnType("int");
 
-                    b.HasKey("SectionID");
+                    b.Property<int>("SaloonId")
+                        .HasColumnType("int");
 
-                    b.HasIndex("FacultyID");
+                    b.HasKey("Id");
 
-                    b.ToTable("Sections");
+                    b.HasIndex("MovieId");
+
+                    b.HasIndex("SaloonId");
+
+                    b.ToTable("MovieSaloon");
                 });
 
-            modelBuilder.Entity("ENOCA_CaseStudy.Data.Entites.Student", b =>
+            modelBuilder.Entity("ENOCA_CaseStudy.Data.Entites.Saloon", b =>
                 {
-                    b.Property<int>("StudentID")
+                    b.Property<int>("SaloonID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StudentID"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SaloonID"), 1L, 1);
 
-                    b.Property<int>("FacultyID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
+                    b.Property<string>("SaloonName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("SectionName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("SaloonID");
 
-                    b.Property<string>("Surname")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("StudentID");
-
-                    b.HasIndex("FacultyID");
-
-                    b.ToTable("Students");
+                    b.ToTable("Saloons");
                 });
 
             modelBuilder.Entity("ENOCA_CaseStudy.Data.Entites.User", b =>
@@ -293,22 +287,23 @@ namespace ENOCA_CaseStudy.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("ENOCA_CaseStudy.Data.Entites.Section", b =>
+            modelBuilder.Entity("ENOCA_CaseStudy.Data.Entites.MovieSaloon", b =>
                 {
-                    b.HasOne("ENOCA_CaseStudy.Data.Entites.Faculty", null)
-                        .WithMany("Sections")
-                        .HasForeignKey("FacultyID");
-                });
-
-            modelBuilder.Entity("ENOCA_CaseStudy.Data.Entites.Student", b =>
-                {
-                    b.HasOne("ENOCA_CaseStudy.Data.Entites.Faculty", "Faculty")
-                        .WithMany("Students")
-                        .HasForeignKey("FacultyID")
+                    b.HasOne("ENOCA_CaseStudy.Data.Entites.Movie", "Movie")
+                        .WithMany("MovieSaloons")
+                        .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Faculty");
+                    b.HasOne("ENOCA_CaseStudy.Data.Entites.Saloon", "Saloon")
+                        .WithMany()
+                        .HasForeignKey("SaloonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Movie");
+
+                    b.Navigation("Saloon");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -362,11 +357,9 @@ namespace ENOCA_CaseStudy.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ENOCA_CaseStudy.Data.Entites.Faculty", b =>
+            modelBuilder.Entity("ENOCA_CaseStudy.Data.Entites.Movie", b =>
                 {
-                    b.Navigation("Sections");
-
-                    b.Navigation("Students");
+                    b.Navigation("MovieSaloons");
                 });
 #pragma warning restore 612, 618
         }

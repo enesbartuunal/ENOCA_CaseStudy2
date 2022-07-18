@@ -1,0 +1,113 @@
+﻿@model IEnumerable<ENOCA_CaseStudy.Models.MovieDto>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<br />
+<br />
+@Html.Partial("_ButtonPartial")
+<div id="layoutSidenav_content">
+    <main>
+        <table id="example" class="display" style="width:100%">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayName("Film")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Yapım Yılı")
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            @if (Model != null)
+            {
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MovieName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ProductionYear)
+                            </td>
+                            <td>
+                                <button onclick="location.href = '@Url.Action("Edit")'">@Html.ActionLink("Düzenle", "Edit", new {id=item.MovieID}, new { @style = "color:#ffd800;text-decoration:none" })</button> |
+                                <input type="button" value="Delete" class="delete" id="@item.MovieID" style="color:red" /> |
+                                <button onclick="location.href = '@Url.Action("CreateReleaseYear")'">@Html.ActionLink("Gösterim Tarihi ve Salonunu Ayarla", "CreateReleaseYear", new {id=item.MovieID}, new { @style = "color:#6EC506;text-decoration:none" })</button> |
+                                <button onclick="location.href = '@Url.Action("ShowReleaseHistory")'">@Html.ActionLink("Gösterim Geçmişine Bak", "ShowReleaseHistory", new {id=item.MovieID}, new { @style = "color:#6EC506;text-decoration:none" })</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            }
+            else
+            {
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+
+                    <td>
+                    </td>
+
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+            }
+        </table>
+    </main>
+</div>
+<hr />
+<div>
+    <form>
+        <label class="w-25">Yapım Yılı Başlangıç:</label>
+        <input class="w-25" type="number" id="starDate" value="0" name="startDate"><br><br>
+        <label class="w-25">Yapım Yılı Bitiş:</label>
+        <input class="w-25" type="number" id="overDate" value="2022" name="overDate">
+
+        <input type="submit" value="Ara">
+    </form>
+    <hr />
+    <form>
+        <label class="w-25">Salon İsmi:</label>
+        <select class="w-25" name="saloonId" id="saloonId">
+            <option selected="selected" value="0">Salon Seçimini Yapınız.</option>
+            @foreach (var item in (List<SaloonDto>)ViewBag.SaloonList)
+            {
+                <option value="@item.SaloonID">@item.SaloonName</option>
+            }
+        </select>
+       
+        <input type="submit" value="Ara">
+         <hr />
+    </form>
+</div>
+
+
+@section Scripts{
+    <script src="~/js/Movie.js"></script>
+    <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#example').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.22/i18n/Turkish.json"
+                }
+            });
+
+        });
+    </script>
+  }

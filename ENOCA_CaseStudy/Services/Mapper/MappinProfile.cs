@@ -8,12 +8,10 @@ namespace ENOCA_CaseStudy.Services.Mapper
     {
         public MappinProfile()
         {
-            CreateMap<Student, StudentDto>();
-            CreateMap<StudentDto, Student>();
-            CreateMap<Faculty, FacultyDto>();
-            CreateMap<FacultyDto, Faculty>();
-            CreateMap<Section, SectionDto>();
-            CreateMap<SectionDto, SectionDto>();
+            CreateMap<Movie, MovieDto>().ForMember(x => x.SaloonNames, y => y.MapFrom(z => z.MovieSaloons.Select(x => x.Saloon.SaloonName)));
+            CreateMap<MovieDto, Movie>();
+            CreateMap<Saloon, SaloonDto>();
+            CreateMap<SaloonDto, Saloon>();
         }
     }
 }

@@ -16,9 +16,8 @@ builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfi
     .AddEntityFrameworkStores<AppDbContext>();;
 builder.Services.AddRazorPages();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-builder.Services.AddScoped<StudentManager>();
-builder.Services.AddScoped<FacultyManager>();
-builder.Services.AddScoped<SectionManager>();
+builder.Services.AddScoped<MovieManager>();
+builder.Services.AddScoped<SaloonManager>();
 builder.Services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.BottomRight; });
 // Add services to the container.
 builder.Services.AddControllersWithViews();
